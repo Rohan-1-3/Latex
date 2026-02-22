@@ -13,24 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Microsoft fonts
-        run: |
-          echo "ttf-mscorefonts-installer msttcorefonts/accepted-msa-agreements select true" | sudo debconf-set-selections
-          sudo apt-get install -y ttf-mscorefonts-installer
-          fc-cache -fv
-
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
-          latexmk_use_lualatex: true
-          extra_system_packages: "fontconfig"
-          pre_compile: |
-            cp /usr/share/fonts/truetype/msttcorefonts/*.ttf /usr/local/share/fonts/
-            fc-cache -fv
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: compiled-pdf
-          path: main.pdf
+          path: main.tex.pdf
