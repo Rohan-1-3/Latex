@@ -1,0 +1,83 @@
+
+\documentclass[main]{subfiles}
+\begin{document}
+
+\chapter{\MakeUppercase{TIME SCHEDULE}}
+\vspace{-0.5cm}
+
+\begin{table}[H]
+\centering
+
+\rotatebox{90}{%
+\begin{minipage}{0.85\textheight}
+\centering
+\caption{Project Timeline and Gantt Chart}
+\label{tab:gantt}
+
+\begin{ganttchart}[
+    hgrid,
+    vgrid={*1{draw=gray!30}},
+    time slot format=isodate,
+    time slot unit=day,
+    x unit=1.9mm,
+    y unit title=0.9cm,
+    y unit chart=0.95cm,
+    title height=1,
+    title label font=\footnotesize,
+    bar label font=\small\bfseries,
+    bar label node/.append style={align=right},
+    bar height=0.55,
+    group height=0.5,
+    bar/.append style={fill=blue!40}
+]{2024-12-08}{2025-02-28}
+
+% --- titles ---
+\gantttitle{\normalsize\bfseries 2025}{24}
+\gantttitle{\normalsize\bfseries 2026}{59} \\
+\gantttitle{\normalsize\bfseries December}{24}
+\gantttitle{\normalsize\bfseries January}{31}
+\gantttitle{\normalsize\bfseries February}{28} \\
+
+% --- weeks ---
+\gantttitle{\shortstack{\small\bfseries W1 \\ 12/8}}{4}
+\gantttitle{\shortstack{\small\bfseries W2 \\ 12/15}}{7}
+\gantttitle{\shortstack{\small\bfseries W3 \\ 12/22}}{7}
+\gantttitle{\shortstack{\small\bfseries W4 \\ 12/29}}{7}
+\gantttitle{\shortstack{\small\bfseries W5 \\ 1/5}}{7}
+\gantttitle{\shortstack{\small\bfseries W6 \\ 1/12}}{7}
+\gantttitle{\shortstack{\small\bfseries W7 \\ 1/19}}{7}
+\gantttitle{\shortstack{\small\bfseries W8 \\ 1/26}}{7}
+\gantttitle{\shortstack{\small\bfseries W9 \\ 2/2}}{6}
+\gantttitle{\shortstack{\small\bfseries W10 \\ 2/9}}{7}
+\gantttitle{\shortstack{\small\bfseries W11 \\ 2/16}}{7}
+\gantttitle{\shortstack{\small\bfseries W12 \\ 2/23}}{6}
+\gantttitle{\shortstack{\small\bfseries W13 \\ 2/28}}{4}\\
+
+--- tasks ---
+% \ganttbar{\shortstack[r]{Research \& Problem \\ Identification}}{2024-12-08}{2024-12-14} \\
+% \ganttbar{\shortstack[r]{Literature Review \& \\ Proposal Preparation}}{2024-12-15}{2025-01-19} \\
+% \ganttbar{\shortstack[r]{Data Acquisition \& \\ Preprocessing}}{2025-01-05}{2025-01-18} \\
+% \ganttbar{\shortstack[r]{LULC Classification \& \\ Accuracy Assessment}}{2025-01-12}{2025-01-25} \\
+% \ganttbar{\shortstack[r]{Feature Engineering}}{2025-01-26}{2025-02-01} \\
+% \ganttbar{\shortstack[r]{Model Development \\ \& Training}}{2025-02-02}{2025-02-15} \\
+% \ganttbar{\shortstack[r]{Model Training, \\ Forecasting \& Evaluation}}{2025-02-09}{2025-02-22} \\
+% \ganttbar{\shortstack[r]{Result Visualization \& \\ Report Finalization}}{2025-02-16}{2025-02-28} \\
+% \ganttbar{Documentation}{2024-12-08}{2025-02-28}
+
+% Temp Gantt
+\ganttbar{\shortstack[r]{Research \& Problem \\ Identification}}{2024-12-08}{2024-12-14} \\
+\ganttbar{\shortstack[r]{Literature Review \& \\ Proposal Preparation}}{2024-12-15}{2025-01-19} \\
+\ganttbar{\shortstack[r]{Data Acquisition \& \\ Preprocessing}}{2025-01-05}{2025-01-18} \\
+\ganttbar{\shortstack[r]{LULC Classification \& \\ Accuracy Assessment}}{2025-01-12}{2025-01-25} \\
+\ganttbar{\shortstack[r]{Feature Engineering}}{2025-01-26}{2025-02-22} \\
+\ganttbar{\shortstack[r]{Model Development \\ \& Training}}{2025-02-02}{2025-02-22} \\
+\ganttbar{\shortstack[r]{Model Training, \\ Forecasting \& Evaluation}}{2025-02-02}{2025-02-22} \\
+\ganttbar{\shortstack[r]{Result Visualization \& \\ Report Finalization}}{2025-02-16}{2025-02-28} \\
+\ganttbar{Documentation}{2024-12-08}{2025-02-28}
+
+\end{ganttchart}
+\end{minipage}
+}
+\end{table}
+
+\end{document}

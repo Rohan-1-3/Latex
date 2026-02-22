@@ -1,0 +1,73 @@
+\documentclass[main]{subfiles} 
+
+\begin{document}
+
+\chapter*{\centering \MakeUppercase{Appendix}}
+
+\section*{Appendix A: Data Sources and Access}
+% \addcontentsline{toc}{section}{Appendix A: Data Sources and Access}
+
+This study primarily relies on freely available Earth observation and geospatial datasets to ensure reproducibility and cost-effectiveness. Multispectral satellite imagery is sourced from the Landsat program, which provides a long-term, consistent archive suitable for land use and land cover (LULC) analysis and temporal modeling.
+
+\begin{itemize}
+    \item \textbf{Landsat Satellite Imagery (30 m):} Multitemporal imagery from Landsat 5 TM, Landsat 7 ETM+, and Landsat 8/9 OLI/TIRS sensors is used to construct a continuous time series. Data are accessed through Google Earth Engine (GEE) for large-scale processing and, where required, via the USGS EarthExplorer for validation and archival reference.
+    
+    \item \textbf{Ancillary Data (optional):} Digital Elevation Models (DEM) such as SRTM or ASTER are used to derive slope and elevation layers for terrain-based masking and improved classification accuracy. OpenStreetMap (OSM) road networks and settlement layers are used for contextual validation, while administrative boundary shapefiles are applied to spatially clip the study area and standardize map outputs.
+    
+    \item \textbf{Reference Data for Accuracy Assessment:} High-resolution basemap imagery from platforms such as Google or Bing is used for visual interpretation and validation. Where available, existing land cover datasets and manually interpreted sample points are employed to generate reference samples for accuracy assessment.
+\end{itemize}
+
+\section*{Appendix B: Proposed LULC Classification Scheme}
+% \addcontentsline{toc}{section}{Appendix B: Proposed LULC Classification Scheme}
+
+The land use and land cover classification scheme is designed to balance thematic detail with the spatial and spectral limitations of Landsat imagery. The selected classes reflect dominant land cover types in the study area and are compatible with medium-resolution satellite data.
+
+A minimum of five to seven LULC classes is adopted to capture key landscape characteristics while minimizing class confusion. The primary classes include:
+\begin{itemize}
+    \item \textbf{Built-up / Urban:} Residential, commercial, industrial areas, and transportation infrastructure.
+    \item \textbf{Vegetation / Forest:} Natural forests, plantations, and dense vegetation cover.
+    \item \textbf{Agriculture / Cropland:} Cultivated land, cropland mosaics, and seasonal farming areas.
+    \item \textbf{Water Bodies:} Rivers, lakes, reservoirs, and ponds.
+    \item \textbf{Bare Land / Sand / Rock:} Exposed soil, riverbanks, construction sites, and rocky surfaces.
+    \item \textbf{Optional Classes:} Wetlands or grasslands are included when they represent a significant portion of the landscape and can be spectrally distinguished.
+\end{itemize}
+
+\section*{Appendix C: Evaluation Metrics}
+% \addcontentsline{toc}{section}{Appendix C: Evaluation Metrics}
+
+The performance of the LULC classification and prediction models is assessed using standard accuracy metrics derived from comparison with reference data. These metrics provide both overall and class-specific performance evaluation.
+
+\begin{itemize}
+    \item \textbf{Overall Accuracy (OA):} Measures the proportion of correctly classified samples.
+    \item \textbf{Class-wise Accuracy:} Precision and recall values are computed for each LULC class to assess omission and commission errors.
+    \item \textbf{F1-score:} Provides a balanced measure of precision and recall, particularly useful for imbalanced classes.
+    \item \textbf{Confusion Matrix:} Summarizes classification results and error distribution across classes.
+    \item \textbf{Cohen’s Kappa Coefficient:} Evaluates classification agreement while accounting for chance agreement.
+\end{itemize}
+
+\section*{Appendix D: Feature Engineering and Input Variables}
+% \addcontentsline{toc}{section}{Appendix D: Feature Engineering and Input Variables}
+
+To enhance class separability and temporal learning, multiple spectral indices and auxiliary features were derived from Landsat imagery.
+
+\begin{table}[h]
+\centering
+\caption{Input features used for LULC modeling}
+\begin{tabular}{|p{4cm}|p{7cm}|}
+\hline
+\textbf{Feature Type} & \textbf{Description} \\
+\hline
+Spectral bands & Blue, Green, Red, NIR, SWIR-1, SWIR-2 \\
+\hline
+Vegetation indices & NDVI to capture vegetation dynamics \\
+\hline
+Built-up indices & NDBI and related indices for urban detection \\
+\hline
+Water indices & NDWI/MNDWI for surface water extraction \\
+\hline
+Temporal features & Year-wise composites and change trends \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{document}

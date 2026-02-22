@@ -1,0 +1,206 @@
+\documentclass[main]{subfiles} 
+
+\begin{document}
+
+\chapter{\MakeUppercase{Methodology}}
+
+% To model urban expansion and densification in Kathmandu, we use two separate machine learning approaches. For Random Forest, we generate per-pixel tabular features from multi-decadal Landsat 30m data, including spectral indices (NDBI, NDVI, EBBI), texture metrics, slope, elevation, and neighborhood statistics across 3×3 or 5×5 windows. One RF model predicts expansion by classifying non-urban pixels likely to convert to built-up, while the other predicts densification by estimating changes in impervious fraction or urban density within existing urban pixels. 
+
+% To model urban expansion and densification in Kathmandu, we use CNN-LSTM, we extract multi-year image patches around each pixel with spectral bands, indices, and topography as separate channels. The CNN captures spatial patterns in each patch (texture, clustering, local infill), and the LSTM captures temporal trends to predict future expansion and incremental densification.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth,height=0.5\textheight]{graphics/Process_Flowchart.drawio (1).drawio.png}
+    \caption{Process Flow Diagram}  
+    \label{fig:Process_Flowchart}
+\end{figure}
+
+\section{Study Area Selection}
+For this study, we selected \textbf{Kathmandu Valley} to analyze urban expansion and densification. The valley covers approximately 665 km\textsuperscript{2} and is located at 27°42′14″N and 85°18′31″E. Elevation ranges from 1,200–2,100 meters with slopes up to 53.1°, which significantly influence urban development patterns.
+
+In addition to the urban core, the study area includes peripheral and peri-urban zones along the valley outskirts, where rapid conversion of agricultural land and dispersed development are actively occurring. The inclusion of these transitional zones enables comprehensive assessment of both mature urban densification and emerging urban growth processes.
+
+\section{Topography and Terrain}
+Kathmandu Valley is surrounded by the Himalayan foothills and consists of a basin with varied terrain. The elevation gradient and slope variability create constraints for urban expansion and influence settlement patterns. Flat valley floors are the most densely built-up, whereas steep slopes limit both horizontal expansion and vertical densification.
+
+\section{Urban Growth Trends}
+The valley has experienced rapid urbanization over the past decades. According to Thapa and Murayama (2012) \cite{thapa2012scenario}, urban expansion has primarily occurred along the flat valley floors and has progressively absorbed surrounding villages and agricultural land. The rapid growth leads to both horizontal expansion and vertical densification within already urbanized areas.
+
+
+\section{Data preparation}
+LULC mapping and temporal analysis were carried out using multi-temporal satellite imagery and supportive spatial data, with data sources detailed in Table~\ref{tab:data_sources}.
+
+\begin{table}[h]
+\centering
+\caption{Summary of Data Sources and Characteristics}
+\label{tab:data_sources}
+\begin{tabular}{|p{3.2cm}|p{4.2cm}|p{3cm}|p{3.5cm}|}
+\hline
+\textbf{Data Type} & \textbf{Source} & \textbf{Spatial / Temporal Resolution} & \textbf{Purpose in Study} \\
+\hline
+Landsat Surface Reflectance Imagery (Landsat 5, 7, 8, 9) & USGS EarthExplorer / Google Earth Engine & 30 m; annual observations from 2000 to latest & Primary data source for extracting spectral, spatial, and temporal features to analyze urban expansion and densification \\
+\hline
+Land Use / Land Cover (LULC) Maps & Google Earth Engine (derived) & 30 m; multi-temporal & Initial delineation of built-up, vegetation, water, and other land cover classes for change analysis and model training support \\
+\hline
+Administrative Boundaries & National Geoportals / Open Data Repositories & Vector; static & Defining the study area (Kathmandu Valley) and clipping satellite imagery \\
+\hline
+Digital Elevation Model (DEM) & SRTM / ASTER (via GEE) & 30 m; static & Derivation of elevation and slope to support spatial context and urban growth constraints \\
+\hline
+Supportive Spatial Layers & OpenStreetMap / National Datasets & Vector; static & Contextual information for validation and interpretation of urban growth patterns \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\section{Preprocessing}
+Preprocessing ensures spatial and radiometric consistency across the multi-decadal dataset. Image clipping to the Kathmandu Valley boundary is performed using QGIS or directly within GEE to reduce data volume and processing overhead.
+
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Cloud \& Shadow Masking:}  
+    Clouds and their associated shadows obscure land surface information and introduce noise in temporal analysis. Quality assurance bands are used to mask cloud- and shadow-affected pixels, while multi-date image compositing is applied to minimize data loss and improve spatial completeness.
+
+    \item \textbf{Radiometric Consistency:}  
+    Surface reflectance products are used to ensure spatial and radiometric comparability across sensors and acquisition years. This step reduces inter-sensor variability and enables reliable temporal trend analysis.
+
+    \item \textbf{Annual Mosaics:}  
+    To standardize temporal representation, cloud-free annual mosaics are generated for each year. These mosaics provide a single representative image per year, supporting consistent temporal feature extraction and model training.
+\end{enumerate}
+
+
+
+\section{Feature Engineering}
+Feature engineering transforms raw spectral data into meaningful predictors that capture urban expansion and densification processes. %Features are derived using QGIS, GEE, and Python-based workflows, depending on model requirements.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[
+        width=\textwidth,
+    ]{graphics/feature_engineer.png}
+    \caption{Conceptual framework of the feature engineering pipeline}
+    \label{fig:feature_engineering}
+\end{figure}
+
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Spectral Features:}  
+    Spectral indices such as NDVI, NDBI, EBBI, and Urban Index are computed to enhance discrimination between built-up, vegetation, and other land cover types. These features serve as core input parameters for CNN-LSTM models to identify current and future urban pixels.
+
+    \item \textbf{Spatial Features:}  
+    Spatial context is incorporated through texture measures (e.g., entropy, variance) and ancillary layers such as elevation and slope, which act as independent predictor variables.
+
+    \item \textbf{Temporal Features:}  
+    Temporal features capture change dynamics across years, including trend slopes, change magnitude, and inter-annual variability of spectral indices. In the RF framework, temporal summaries are explicitly computed and provided as tabular features.
+\end{enumerate}
+
+
+\section{Model Training and Testing}
+The extracted features from multi-temporal Landsat imagery are organized as spatio-temporal sequences suitable for deep learning. For the CNN-LSTM model, image patches (small neighborhoods around each pixel) are stacked over time to form sequences, where each sample encodes both spatial context and temporal evolution.
+
+\subsection*{CNN-LSTM Model}
+The CNN-LSTM architecture combines Convolutional Neural Networks (CNNs) to extract spatial features from image patches and Long Short-Term Memory (LSTM) networks to capture temporal dependencies across multiple time steps. The CNN layers encode local spatial patterns, while the LSTM layers model sequential changes in LULC over time. Given an input sequence $\mathbf{X} = [X_1, X_2, \dots, X_T]$, the model prediction at time $t$ is defined as:
+\begin{equation}
+\hat{Y}_t = f_{\text{LSTM}}(f_{\text{CNN}}(X_1), f_{\text{CNN}}(X_2), \dots, f_{\text{CNN}}(X_t)),
+\end{equation}
+where $f_{\text{CNN}}$ extracts spatial features from each patch and $f_{\text{LSTM}}$ captures temporal dependencies across time steps. CNN-LSTM is particularly suitable for this study due to its ability to model both spatial structure and temporal evolution simultaneously.
+
+\subsubsection*{Working of the CNN-LSTM Algorithm}
+
+\begin{itemize}
+    \item Spatial Feature Extraction with CNN:  
+    Convolutional layers scan each input patch using multiple filters to detect spatial patterns such as edges, built-up regions, and textures. Pooling layers reduce dimensionality while retaining essential features.
+
+    \item Sequence Formation:  
+    Extracted feature maps from CNN layers are flattened and stacked across time steps to form a temporal sequence representing the evolution of each spatial patch.
+
+    \item Temporal Modeling with LSTM:  
+    The LSTM layers process the sequence to learn long-term dependencies, enabling the model to recognize trends such as gradual expansion or sudden densification events in urban areas.
+
+    \item Prediction Layer:  
+    The LSTM outputs are passed through a dense (fully connected) layer followed by a softmax (for classification) or linear activation (for regression) to produce the final predicted LULC class or probability.
+
+    \item Effectiveness of CNN-LSTM:  
+    By combining spatial and temporal learning, CNN-LSTM captures complex, non-linear, and dynamic patterns in urban growth, outperforming models that only use spatial or temporal information independently.
+\end{itemize}
+
+The working of the CNN-LSTM model is shown in Figure~\ref{fig:cnn_lstm_workflow}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{graphics/cnn_lstm.png}
+    \caption{CNN-LSTM Model Architecture }
+    \label{fig:cnn_lstm_workflow}
+\end{figure}
+
+\centerline{(Source: https://www.nature.com/articles/s41598-021-93656-0)}
+
+% \subsubsection*{Input Sequence Preparation}
+
+% Each input sequence is formed from image patches of size $p \times p$ over $T$ time steps:
+% \begin{equation}
+% \mathbf{X} = \{ X_{t} \}_{t=1}^{T}, \quad X_t \in \mathbb{R}^{p \times p \times c},
+% \end{equation}
+% where $c$ is the number of spectral bands or derived indices (e.g., NDVI, NDBI).
+
+% \subsubsection*{Convolutional Feature Extraction}
+
+% For each patch $X_t$, CNN layers perform the convolution operation:
+% \begin{equation}
+% F_t = \sigma(W * X_t + b),
+% \end{equation}
+% where $*$ denotes convolution, $W$ is the filter, $b$ is bias, and $\sigma$ is an activation function (e.g., ReLU). $F_t$ is the spatial feature map fed into the LSTM.
+
+% \subsubsection*{Temporal Modeling with LSTM}
+
+% The LSTM updates hidden states $h_t$ and cell states $c_t$ for each time step:
+% \begin{align}
+% i_t &= \sigma(W_i F_t + U_i h_{t-1} + b_i) \\
+% f_t &= \sigma(W_f F_t + U_f h_{t-1} + b_f) \\
+% o_t &= \sigma(W_o F_t + U_o h_{t-1} + b_o) \\
+% c_t &= f_t \odot c_{t-1} + i_t \odot \tanh(W_c F_t + U_c h_{t-1} + b_c) \\
+% h_t &= o_t \odot \tanh(c_t)
+% \end{align}
+
+% \subsubsection*{Prediction Layer}
+
+% Finally, the last hidden state $h_T$ is passed to a fully connected layer to output class probabilities or regression values:
+% \begin{equation}
+% \hat{Y} = \text{softmax}(W_y h_T + b_y).
+% \end{equation}
+
+% \centerline{(Source: https://arxiv.org/abs/1506.04214”)}
+
+% \newpage
+% \section{Model Hyperparameter Tuning}
+
+% Hyperparameter tuning is a critical stage in the development of effective machine learning models. Unlike model parameters that are automatically learned during training, hyperparameters define the learning behavior of the model and must be specified prior to training. Proper selection of hyperparameters plays a key role in enhancing model performance and improving its ability to generalize to unseen data.
+
+% In this study, hyperparameter tuning is further guided by the characteristics of the engineered feature set, which includes spectral indices (e.g., NDVI, NDBI, EBBI), spatial texture measures, and temporal descriptors such as change rate, variance, and trend slope. These features exhibit varying scales, degrees of correlation, and sensitivity to noise across different land cover types. Appropriate tuning of tree depth and minimum samples per leaf is therefore essential to prevent the model from overfitting short-term fluctuations in spectral indices while still capturing meaningful long-term urban densification and expansion patterns. Similarly, optimizing the number of trees improves model stability when learning from multi-temporal features derived from several decades of Landsat observations.
+% \newpage
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[
+%         width=\textwidth,
+%     ]{graphics/hyperparameter_tuning.png}
+%     \caption{Model Hyperparameer tuning}
+%     \label{fig:Process_Flowchart}
+% \end{figure}
+
+% \begin{center}
+% \footnotesize
+% \textit{Source:} https://medium.com/@aditib259/a-comprehensive-guide-to-hyperparameter-tuning-in-machine-learning-dd9bb8072d02
+% \end{center}
+
+
+\section{Model Verification and Performance Evaluation}
+
+Model performance is evaluated using a combination of quantitative accuracy metrics and temporal–spatial consistency assessments to account for the unique challenges of Landsat-based urban growth and densification analysis. Standard classification metrics, including overall accuracy, precision, recall, F1-score, and the Kappa coefficient, are computed to measure the reliability of urban and non-urban discrimination. These metrics are particularly relevant given the class imbalance commonly observed between built-up and non-built-up areas in the Kathmandu Valley.
+
+Beyond static classification accuracy, temporal consistency checks are performed to verify that predicted changes align with realistic urban evolution processes. Since urban densification is characterized by gradual increases in built-up intensity rather than abrupt class transitions, temporal trends in spectral indices (e.g., NDBI increase, NDVI decrease) and engineered temporal features (change rate and trend slope) are examined to ensure that model predictions reflect plausible long-term trajectories. Sudden reversals or unrealistic oscillations in predicted urban extent are treated as indicators of model instability.
+
+
+\section{Urban Growth and Densification Mapping}
+This study first performs LULC classification to delineate major surface classes, including built-up areas, water bodies, agricultural land, and forest cover, using multi-temporal Landsat imagery. The resulting LULC maps provide a consistent spatial representation of surface conditions across different years. Temporal comparison of these maps enables identification of both the extent and nature of land cover changes over time. Beyond detecting the conversion of non-urban land into built-up areas, the analysis also focuses on urban densification, characterized by increased built-up intensity within already urbanized regions. By examining temporal changes in spectral indices and spatial patterns within built-up pixels, the study captures clustering, infill development, and internal urban intensification, offering a more comprehensive understanding of urban growth dynamics.
+
+\section{Analysis of Uncertainty}
+
+Kathmandu Valley presents unique challenges for modeling urban expansion and densification due to its current post-urban state. Much of the central valley is already highly built-up, leaving limited areas for further horizontal expansion. As a result, modeling efforts may primarily capture incremental densification rather than large-scale urban growth, which reduces the variability in training data and can limit predictive performance. Additionally, the use of Landsat imagery at 30m resolution introduces inherent uncertainties. While sufficient for mapping general urban patterns, 30m pixels often contain mixed land-cover signals, particularly in dense or heterogeneous urban neighborhoods, making it difficult to accurately quantify fine-scale infill and vertical densification. Temporal inconsistencies, sensor noise, and cloud contamination further affect data quality. Together, the advanced urbanization of Kathmandu and the coarse spatial resolution of available imagery may constrain the precision of machine learning models and introduce uncertainty in both expansion and densification predictions.
+
+\end{document}

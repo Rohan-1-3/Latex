@@ -1,0 +1,98 @@
+
+\documentclass[main]{subfiles} 
+
+\begin{document}
+
+\chapter{\MakeUppercase{REQUIREMENT ANALYSIS}}
+
+Requirement analysis is a crucial phase of the project development process that identifies the technical, functional, and operational needs of the proposed system. This chapter outlines the system requirements, functional and non-functional requirements, and the feasibility of implementing the proposed temporal machine learning framework for predicting urban growth and LULC dynamics using Landsat time-series data.
+
+\section{Requirement Analysis}
+The proposed system is a data-driven analytical framework designed to process multi-temporal Landsat imagery, generate LULC maps, and apply temporal machine learning models to forecast future urban growth and LULC changes. The system requires adequate computational resources, appropriate software tools, and a stable execution environment to support data preprocessing, model training, evaluation, and visualization.
+
+\subsection{Software Requirements}
+The software requirements focus on open-source tools and platforms suitable for remote sensing analysis and machine learning.
+
+\begin{enumerate}[label=\roman*.]
+    \item \textbf{Operating System}
+    \begin{itemize}
+        \item Windows 11 / Linux / macOS
+    \end{itemize}
+    
+    \item \textbf{Programming Language}
+    \begin{itemize}
+        \item Python (version 3.8 or higher)
+    \end{itemize}
+    
+    \item \textbf{Remote Sensing and GIS Tools}
+    \begin{itemize}
+        \item Google Earth Engine (GEE) for accessing and preprocessing Landsat imagery
+        \item QGIS or ArcGIS for spatial visualization and map validation
+    \end{itemize}
+    
+    \item \textbf{Machine Learning and Deep Learning Libraries}
+    \begin{itemize}
+        \item TensorFlow or PyTorch for implementing temporal machine learning models
+        \item Keras (if using TensorFlow backend) for rapid model prototyping
+        \item Scikit-learn for baseline models and evaluation metrics
+    \end{itemize}
+    
+    \item \textbf{Data Processing and Visualization Libraries}
+    \begin{itemize}
+        \item NumPy and Pandas for numerical and tabular data processing
+        \item Matplotlib and Seaborns for plotting and result visualization
+    \end{itemize}
+    
+    \item \textbf{Development Environment}
+    \begin{itemize}
+        \item Jupyter Notebook or Visual Studio Code for development and experimentation
+    \end{itemize}
+\end{enumerate}
+
+\section{Functional Requirements}
+Functional requirements describe what the system is expected to do. These requirements define the core functionalities necessary to achieve the project objectives.
+
+\begin{enumerate}[label=\roman*.]
+    \item The system shall acquire multi-year Landsat imagery for the selected study area.
+    \item The system shall preprocess satellite images, including cloud masking, compositing, and normalization.
+    \item The system shall generate annual LULC maps from Landsat data using suitable classification methods.
+    \item The system shall construct temporal sequences of LULC data for machine learning input.
+    \item The system shall implement temporal machine learning model.
+    \item The system shall forecast future urban growth and LULC patterns over defined time horizons.
+    \item The system shall evaluate model performance using accuracy metrics and hindcasting techniques.
+    \item The system shall visualize historical and predicted LULC maps for interpretation and analysis.
+    \item The system shall store trained models and prediction outputs for further analysis and reporting.
+\end{enumerate}
+
+\section{Non-Functional Requirements}
+Non-functional requirements describe the quality attributes and operational constraints of the system.
+
+\begin{enumerate}[label=\roman*.]
+    \item \textbf{Performance}: The system should efficiently process large raster datasets, and model training should be feasible on a personal computer.
+    
+    \item \textbf{Scalability}: The framework should support extension to other geographic regions and additional years of Landsat data with minimal modification.
+    
+    \item \textbf{Reliability}: The system should produce consistent results under identical conditions, with preprocessing steps minimizing errors from cloud cover and noise.
+    
+    \item \textbf{Usability}: The workflow should be understandable and reproducible for users with basic GIS and Python knowledge, with well-documented code.
+    
+    \item \textbf{Maintainability}: The system should be modular, allowing independent updates to preprocessing, modeling, and evaluation components.
+\end{enumerate}
+
+% \newpage
+\section{Feasibility Study}
+The feasibility study evaluates whether the proposed project can be realistically implemented within the available constraints of time, resources, and technical capability.
+
+\subsection{Technical Feasibility}
+The project is technically feasible due to the availability of long-term Landsat data and mature machine learning frameworks. Google Earth Engine provides seamless access to preprocessed Landsat datasets, reducing data acquisition and preprocessing complexity. Open-source libraries such as TensorFlow and PyTorch enable the implementation of advanced temporal machine learning models without licensing constraints.
+
+\subsection{Economic Feasibility}
+The project is economically feasible as it relies entirely on freely available satellite data and open-source software tools. No additional cost is required for data acquisition or software licenses, making the approach suitable for academic and research-oriented applications.
+
+\subsection{Operational Feasibility}
+The system can be operated by users with basic knowledge of remote sensing, GIS, and Python programming. The workflow does not require specialized hardware beyond a standard personal computer, ensuring ease of deployment and operation in academic environments.
+
+\subsection{Schedule Feasibility}
+The project is feasible within the allocated time frame of a minor project. The modular structure of the workflow allows parallel progress in data preprocessing, model development, and evaluation, ensuring timely completion.
+
+\end{document}

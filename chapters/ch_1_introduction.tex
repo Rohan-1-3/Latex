@@ -1,0 +1,76 @@
+\documentclass[main]{subfiles} 
+
+\begin{document}
+
+\chapter{\MakeUppercase{INTRODUCTION}}
+
+\pagenumbering{arabic}
+
+\section{Background}
+Urbanization is a process in which population, economic activities, and infrastructure gradually concentrate in a particular area. It includes physical transformation of land by construction of buildings, roads, and other infrastructure, as well as population-related changes such as rural–urban migration. Urbanization is not only limited to outward expansion of cities; it also includes increased development within existing urban areas through infill construction and higher land-use intensity i.e densification. As urban areas grow, agricultural land, vegetation, and open spaces are converted into built-up surfaces, affecting local environmental conditions, drainage systems, and microclimate \cite{lu2014lulc}. Therefore, urbanization needs to be understood not only in demographic terms but also through spatial land-use changes that can be observed using geospatial data.
+
+In many developing countries, urbanization is happening rapidly and often without proper planning \cite{thapa2012scenario}. Rapid urbanization refers to fast urban growth by population pressure and economic concentration, while haphazard urbanization shows unplanned and irregular land development. Such growth leads to loss of agricultural land, environmental degradation, infrastructure stress, traffic congestion, and increased flood risk. Uncontrolled urban expansion and excessive densification decreases urban green spaces and overload basic services, making cities more susceptible to environmental and socio-economic problems \cite{thapa2012scenario,environments4040072}. These issues highlight the need for systematic monitoring and predictive analysis of urban growth patterns.
+
+Nepal has experienced rapid urban growth in recent decades and the Kathmandu valley being the most affected region. Factors such as population increase, rural–urban migration, economic centralization, land scarcity due to valley topography, and weak land-use regulation have collectively accelerated urban development and densification in the Kathmandu Valley. Large areas of agricultural land and open spaces have been converted into built-up areas, while existing urban zones have become increasingly dense due to infill development and limited availability of land for outward expansion. Such unplanned urban growth has increased problems including frequent flooding, land degradation, traffic congestion, and growing pressure on urban infrastructure and services \cite{environments4040072,su142315739}.
+
+In order to track urbanization and densification, appropriate analytical approaches are required that can capture spatial patterns of land transformation and their changes over time. Urbanization and densification can be analyzed using different approaches including population-based indicators, socio-economic data, and spatial analysis of land transformation. For this specific purpose, Land Use/Land Cover(LULC) analysis gives a clear, map-based way to see how urbanization changes the land. LULC maps represent how land is utilized at different time periods and allow quantitative measurement of changes such as conversion of agricultural land, loss of vegetation, and increase in built-up areas. Recent studies use LULC data not only to detect urban expansion but also to observe densification processes by analyzing increases in built-up intensity, reduction of internal open spaces, and conversion of vegetation and agricultural land within existing urban areas \cite{wang2020land,environments4040072}. Changes in built-up proportion, land-use transitions, and spatial clustering derived from LULC maps are commonly used to detect development intensity and infill growth. LULC-based analysis is effective for understanding both expansion-driven and densification-driven urban growth dynamics.
+
+Satellite-based observations are widely used to analyse urban growth and LULC changes over time in a consistent and spatial way, with Landsat imagery being one of the most common data sources \cite{huang2021global}. The Landsat program provides freely available multispectral satellite images with a spatial resolution of 30 m and continuous temporal coverage from the 1980s to the present, making it suitable for long-term urban growth analysis. Landsat data are commonly used to generate multi-temporal LULC maps, extract spectral indices, and quantify land-cover transitions such as conversion of agricultural land and vegetation into built-up areas. Its consistent data archive helps in reliable monitoring of land surface changes over multiple decades. Although Landsat imagery cannot capture individual buildings or vertical growth directly, it is suitable for regional-scale assessment of urban expansion and densification in developing countries where high-resolution spatial data are limited.
+
+LULC classification in this project requires Machine Learning(ML) models to map different land types from satellite imagery. Among the tested models, Random Forest (RF) has overperformed compared to tree-based models such as CART and Gradient Tree Boosting (GTB), as well as other models like Support Vector Machine (SVM) and Multilayer Perceptron (MLP) artificial neural networks, and has achieved the highest overall accuracy and Kappa coefficient. RF’s ensemble of decision trees allows it to handle mixed pixels and spectral variability effectively, and it consistently delivers more reliable results \cite{Ouma31122023,ZHAO2024129}. These models are applied to Landsat 30 m imagery to detect vegetation, built-up areas, barren land, and water bodies, producing accurate and informative LULC maps for urban and environmental analysis.
+
+Earlier urban growth studies in Nepal mainly depended on traditional planning approaches such as land-use zoning, master plans, and scenario-based models like Cellular Automata–Markov (CA–Markov) \cite{thapa2012scenario}. These approaches are effective for analyzing general patterns of urban expansion and understanding how cities spread outward over time. They typically assume fixed land-transition probabilities and depend on past trends to predict future growth. Such assumptions limit their ability to capture complex and dynamic urban processes where growth is driven more by densification, infill development, and changes within existing urban areas rather than simple horizontal expansion \cite{nagasa2025}. As a result, these conventional methods often struggle to represent the nature of non-linear urban growth.
+
+The availability of multi-year land cover data from satellite observations has made machine learning (ML) models highly effective for studying urban growth. These models are capable of identifying complex and hidden patterns within large volumes of satellite imagery. In this study, machine learning approaches are applied to multi-temporal Landsat imagery to analyze and predict urban growth and LULC dynamics in the Kathmandu Valley. The models learn complex, non-linear relationships from spectral, spatial, and temporal features derived from satellite time series, enabling them to capture both horizontal urban expansion and internal densification processes. Unlike traditional rule-based methods, data-driven models such as Random Forest, Support Vector Machine (SVM), and temporal architectures including Long Short-Term Memory (LSTM) and CNN-LSTM learn directly from historical satellite observations, providing a more flexible and accurate framework for forecasting urban change in rapidly developing regions \cite{BOULILA2021101325}.
+
+\section{Motivation}
+
+Nepal faces rapid urbanization with limited availability of high-resolution spatial data and predictive planning tools. Studies in the Kathmandu Valley show that urban areas increased dramatically over the last three decades, primarily at the expense of agricultural land and open spaces \cite{environments4040072}. Existing studies mostly focus on historical mapping and CA--Markov simulations rather than leveraging direct temporal learning from Landsat time series \cite{tiwari2025}. This project is motivated by the need to explore data-driven temporal models that can utilize freely available Landsat imagery to forecast future urban growth patterns in a scalable and cost-effective manner.
+
+In addition, the increasing availability of long-term satellite imagery and open-source geospatial platforms has made it feasible to analyze urban growth patterns with higher temporal resolution and improved spatial accuracy. Leveraging these data sources using machine learning techniques provides an opportunity to move beyond traditional rule-based urban modeling approaches. This research is therefore motivated by the need to develop a scalable, data-driven framework that can support evidence-based urban planning and policy formulation in rapidly urbanizing regions such as Nepal.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{graphics/study_area.pdf}
+    \caption{Study Area Map of Kathmandu Valley}
+\end{figure}
+
+\section{Statement of the Problem}
+
+Urbanization in Kathmandu has intensified rapidly, resulting in substantial conversion of agricultural and forested areas into built-up land \cite{environments4040072}. In mature urban centers, available land has become increasingly constrained, and recent growth exhibits characteristics of densification and limited horizontal expansion. Most existing studies focus on historical LULC mapping or CA--Markov-based predictions, which assume stationary transition probabilities and short temporal baselines \cite{badshah2024role}. These assumptions limit their ability to model the nonlinear and dynamic nature of urban expansion in post-urbanization phases.
+
+Multi-decadal Landsat imagery provides continuous records at 30~m resolution, but its full potential for temporal machine learning-based forecasting in Nepal has not yet been explored. Advanced urban growth models often rely on high-resolution building-level data, which is not feasible at regional scales using medium-resolution satellite imagery \cite{huang2021global}.
+
+There is therefore a need for a data-driven temporal modeling approach that can learn directly from Landsat time series to predict future LULC and urban expansion patterns, supporting more reliable urban planning and sustainable land management in Nepal.
+
+% \newpage
+\section{Project Objective}
+
+\subsection*{General Objective}
+
+The general objective of this project is to develop a data-driven temporal machine learning framework to predict urban growth and LULC dynamics using multi-temporal Landsat satellite imagery.
+
+\subsection*{Specific Objectives}
+
+To achieve the general objective, the specific objectives of this project are:
+
+\begin{itemize}
+\item To acquire and preprocess multi-temporal Landsat imagery for the Kathmandu Valley and surrounding areas.
+\item To generate consistent multi-temporal LULC maps from Landsat data.
+\item To analyze historical patterns of urban growth and LULC change.
+\item To develop and apply temporal machine learning models for future LULC prediction.
+\item To evaluate the predictive performance of temporal machine learning models.
+\item To compare the results of data-driven temporal models with traditional CA--Markov-based prediction methods.
+\end{itemize}
+
+% \newpage
+\section{Significance of the Study}
+
+This study addresses the need for reliable and data-driven tools to predict urban growth and LULC dynamics in rapidly urbanizing regions such as the Kathmandu Valley. By utilizing multi-decadal Landsat imagery and machine learning approaches, the research offers a cost-effective framework for forecasting urban expansion \cite{wang2020land}.
+
+The findings can assist urban planners and policymakers in making informed decisions regarding land-use planning, infrastructure development, and environmental management. Researchers can benefit from the methodological contribution of applying temporal machine learning directly to medium-resolution satellite time series, which remains underexplored in developing regions \cite{tiwari2025}. Additionally, the proposed framework can serve as a baseline tool for local governments and planning agencies where access to high-resolution datasets and advanced modeling resources is limited \cite{nagasa2025}.
+
+Overall, this study bridges the gap between traditional rule-based urban growth models and modern data-driven temporal approaches, contributing to more reliable LULC prediction and promoting sustainable urban management practices in Nepal.
+
+\end{document}

@@ -1,0 +1,357 @@
+% \documentclass[main]{subfiles}
+% \begin{document}
+
+% \chapter{\MakeUppercase{EPILOGUE}}
+
+% \section{Work Progress}
+
+% This project has successfully completed the full data preparation stage required for long-term urban growth and land use/land cover (LULC) analysis. The work completed so far ensures that the Landsat time-series is consistently prepared and ready for supervised classification and year-wise LULC map generation.
+
+% \subsection{Multi-year Landsat dataset assembled (2000--2025)}
+% A complete archive of Landsat imagery for the study area (Kathmandu Valley or the selected urban region) has been collected for the period 2000 to 2025. For each year, the most suitable scenes were selected based on practical data quality considerations, prioritizing the post-monsoon period (around October--November) to minimize cloud contamination and reduce seasonal variation. Landsat 7 imagery was used for earlier years where available, while Landsat 8/9 imagery was used for later years depending on data availability.
+
+% \subsection{Study-area standardization and consistent preparation}
+% All downloaded scenes were organized and prepared using a repeatable approach in QGIS. Each raster scene was clipped to a common study-area boundary so that every year aligns spatially to the same region. This ensures that later comparisons across years represent real land change in the same geographic footprint rather than differences caused by varying scene extents.
+
+% \subsection{Cloud and shadow reduction implemented}
+% To improve reliability, cloud- and shadow-affected pixels were handled systematically using the quality information provided with Landsat products. This step was used to reduce common errors caused by clouds and cloud shadows, which can otherwise appear as false changes in vegetation, water, or built-up areas. The output of this stage is a set of cloud-reduced surface reflectance layers that provide a cleaner basis for analysis and classification.
+
+% \subsection{Feature engineering completed for the full time series}
+% Following preprocessing, the spectral information required for distinguishing key land cover types was prepared. For each year, surface reflectance layers were processed to generate consistent spectral index maps that support urban studies and improve class separability. The feature set includes vegetation-focused indicators, built-up indicators, and water-focused indicators, as well as indices that help reduce confusion between built-up and bare/barren surfaces. As a result, each year now has a standardized set of input features (reflectance layers and derived indices) that are ready to be used in supervised classification workflows.
+
+% \subsection{Operational workflow documentation established}
+% In addition to producing the data products, the workflow has been documented in a step-by-step form for repeatable application across all years. This documentation includes the full preparation pipeline (from clipping and cloud handling to spectral index creation) and the subsequent SCP-specific workflow stages after training samples are created, supporting consistent reproduction of the process for future years and iterative refinements.
+
+% \section{Work Remaining}
+
+% The remaining work focuses on converting the prepared Landsat feature dataset into a complete, consistent annual LULC map archive (2000--2025), followed by quality evaluation and the final urban growth and intensification modeling. While the data preparation and feature engineering pipeline is complete, the classification and analysis stages must now be executed systematically for each year.
+
+% \subsection{Year-wise LULC Map Generation (QGIS + SCP)}
+% The most immediate task is to generate LULC maps for all years in the study period. Although one or two pilot-year maps have already been produced, the workflow must now be applied repeatedly and consistently to create a complete annual (or selected-interval) LULC archive. This includes:
+% \begin{itemize}
+%   \item Applying the established QGIS + SCP classification workflow for each year using the already-prepared feature layers (masked reflectance bands and spectral index maps).
+%   \item Ensuring that the same land cover classes and class definitions are used consistently across all years to avoid artificial changes caused by inconsistent labeling.
+%   \item Producing and organizing the final LULC raster outputs into a structured archive with standardized naming and metadata for each year, enabling time-series comparison and modeling.
+% \end{itemize}
+
+% \subsection{Quality Checking and Accuracy Assessment}
+% Once the multi-year LULC maps are generated, the next step is to evaluate their reliability. This is essential because visually plausible maps can still contain systematic class confusion (e.g., built-up vs.\ barren soil, or cropland vs.\ vegetation). The remaining work includes:
+% \begin{itemize}
+%   \item Creating an independent validation approach (e.g., reserved validation samples or reference points) so that accuracy estimates reflect real generalization rather than performance on training areas.
+%   \item Generating confusion matrices and reporting class-wise performance measures to identify which categories are being confused and why.
+%   \item Using classification confidence information (where available) to locate uncertain regions and guide targeted improvements of training samples in difficult areas.
+% \end{itemize}
+
+% \subsection{Temporal Consistency Refinement Across Years}
+% After accuracy checking, additional refinement will be carried out to ensure the LULC time series is temporally consistent and suitable for long-term change analysis. This stage focuses on reducing year-to-year noise that can be introduced by minor differences in imagery quality or sensor availability. Remaining tasks include:
+% \begin{itemize}
+%   \item Reviewing year-to-year stability of major classes (especially built-up and water) and checking for unrealistic fluctuations that indicate classification noise rather than real land change.
+%   \item Handling years with limited clear pixels (e.g., high cloud contamination) through improved scene selection or consistent compositing strategies where feasible.
+%   \item Maintaining consistent processing rules across Landsat sensors used during the time range to minimize differences that arise due to sensor characteristics rather than real land cover change.
+% \end{itemize}
+
+% \subsection{Urban Growth and Intensification Analysis Dataset Construction}
+% After the LULC archive is complete and validated, it must be converted into analysis-ready products that directly represent urban growth and intensification dynamics. This includes:
+% \begin{itemize}
+%   \item Deriving change products from the LULC time series such as built-up expansion maps, transition maps (e.g., non-built to built), and summary statistics of class change by period.
+%   \item Preparing input datasets that represent urban pressure or growth likelihood (e.g., spatial patterns of transition probability) as required by temporal prediction modeling.
+%   \item Organizing these derived datasets into a structured format suitable for temporal machine learning.
+% \end{itemize}
+
+% \subsection{Temporal Prediction Modeling, Testing, and Tuning}
+% The final major stage is to train and validate temporal prediction models for future LULC behavior and urban intensification. This stage will transform the historical archive into predictive outputs. Remaining tasks include:
+% \begin{itemize}
+%   \item Training temporal models (e.g., CNN-LSTM or comparable temporal machine learning approaches) using the completed LULC sequence and engineered features.
+%   \item Conducting model performance testing using withheld years or time windows to ensure that predictions are robust and not fitted only to the training period.
+%   \item Performing hyperparameter tuning and model refinement, followed by selecting the best-performing configuration based on transparent evaluation criteria.
+% \end{itemize}
+
+% \subsection{Final Outputs and Documentation}
+% The closing tasks include producing final map products and compiling the research deliverables:
+% \begin{itemize}
+%   \item Finalizing predicted LULC maps and urban growth/intensification products for the target future period(s).
+%   \item Preparing final figures and tables, including time-series map panels, change statistics, and accuracy summaries.
+%   \item Completing written documentation of the workflow and results, ensuring reproducibility and clear linkage between data preparation, classification, validation, and modeling.
+% \end{itemize}
+% \end{document}
+
+
+\documentclass[main]{subfiles}
+
+\begin{document}
+
+\chapter{\MakeUppercase{EPILOGUE}}
+
+\section{Work Progress}
+
+The project has successfully completed the complete data-preparation and feature-engineering phase required for long-term Land Use/Land Cover (LULC) mapping and subsequent urban growth modeling. Up to this stage, the Landsat time-series has been standardized spatially and radiometrically, cloud/shadow contamination has been minimized using QA-based masking, and key spectral-index features have been generated consistently for further supervised classification and temporal modeling.
+
+\subsection{Multi-year Landsat surface reflectance archive assembled (2000--2025)}
+A multi-year Landsat archive for the selected study area (Kathmandu Valley) has been assembled for the period 2000--2025 using Landsat Collection 2 Level-2 (surface reflectance) products. Scenes were prioritized from the post-monsoon season (Oct--Nov) to reduce cloud cover and seasonal variability, enabling a more consistent inter-annual comparison. Earlier years primarily utilize Landsat 7 ETM+, while later years rely on Landsat 8/9 OLI based on availability and quality.
+
+\subsection{Study-area standardization and AOI clipping}
+To ensure spatial comparability across years and sensors, all Landsat surface reflectance bands and QA layers were clipped to a common Area of Interest (AOI) boundary. This guarantees that each annual dataset shares the same coordinate reference system, pixel size (30 m), and spatial extent. The clipped outputs establish a standardized raster stack per year (SR bands + QA\_PIXEL), forming the baseline for cloud masking and feature generation.
+
+\subsection{QA\_PIXEL-based cloud and shadow masking implemented}
+QA\_PIXEL is a bitmask. A pixel is treated as clear only if the dilated cloud (bit~2), cirrus (bit~4), cloud (bit~8), and cloud shadow (bit~16) bits are all \textsc{off}. The clear mask applied in the QGIS Raster Calculator is:
+\begin{multline}
+M(\mathbf{p}) =
+\bigl(\operatorname{bitwise\_and}(A,2)=0\bigr)
+\;\&\;
+\bigl(\operatorname{bitwise\_and}(A,4)=0\bigr)
+\;\&\; \\
+\bigl(\operatorname{bitwise\_and}(A,8)=0\bigr)
+\;\&\;
+\bigl(\operatorname{bitwise\_and}(A,16)=0\bigr),
+\end{multline}
+where $A$ denotes the \texttt{QA\_PIXEL} band, \texttt{bitwise\_and} tests whether each cloud/shadow bit is unset, and \texttt{\&} combines all four conditions with logical AND. The result $M(\mathbf{p})$ equals~1 for clear pixels and~0 otherwise. Each surface reflectance band $B_k(\mathbf{p})$ is then masked as:
+\begin{equation}
+B^{\text{mask}}_{k}(\mathbf{p}) = B_{k}(\mathbf{p}) \cdot M(\mathbf{p}),
+\end{equation}
+ensuring all downstream indices are computed only from cloud/shadow-reduced reflectance values.
+
+\subsection{Spectral-index feature engineering completed}
+Using the masked reflectance bands, the following indices were derived to improve separability of vegetation, built-up, cropland, and water:
+\begin{align}
+\mathrm{NDVI}  &= \frac{\mathrm{NIR}-\mathrm{Red}}{\mathrm{NIR}+\mathrm{Red}},\\[4pt]
+\mathrm{NDBI}  &= \frac{\mathrm{SWIR1}-\mathrm{NIR}}{\mathrm{SWIR1}+\mathrm{NIR}},\\[4pt]
+\mathrm{MNDWI} &= \frac{\mathrm{Green}-\mathrm{SWIR1}}{\mathrm{Green}+\mathrm{SWIR1}},\\[4pt]
+\mathrm{EBBI}  &= \frac{\mathrm{SWIR1}-\mathrm{NIR}}{\mathrm{SWIR1}+\mathrm{NIR}+\sqrt{\mathrm{SWIR2}}}.
+\end{align}
+
+Since Landsat sensors have different band numbering, sensor-consistent band mapping was maintained:
+\begin{itemize}
+  \item Landsat 7 ETM+: Green = B2, Red = B3, NIR = B4, SWIR1 = B5, SWIR2 = B7.
+  \item Landsat 8/9 OLI: Green = B3, Red = B4, NIR = B5, SWIR1 = B6, SWIR2 = B7.
+\end{itemize}
+
+The final yearly feature stack therefore consists of masked surface reflectance bands and derived index rasters. These feature layers provide improved discrimination for supervised classification and serve as core predictors for subsequent Random Forest baseline modeling and temporal deep learning.
+
+\subsection{Pilot-year feature outputs prepared and visual verification (2000 and 2020)}
+To verify the correctness and interpretability of the preprocessing and feature-engineering pipeline, pilot-year outputs were generated for representative years (2000 and 2020). These include annual LULC prototype maps for visual inspection of class patterns and spatial plausibility, spatial distributions of each spectral index to confirm expected spectral behaviour, and training-sample overlays to confirm that class labels are spatially distributed and representative of each LULC category.
+
+% ------------------------------------------------------------------ LULC Map
+\subsubsection{LULC Classification Map}
+
+The pilot LULC map for the year 2000 provides the baseline classification of the Kathmandu Valley into four primary classes: Water, Vegetation, Cropland, and Built-up. At this stage, built-up extent is concentrated primarily in the urban core, with cropland and vegetation dominating the surrounding hillside and peri-urban zones. This map serves as the reference point against which later-year classifications are compared to quantify urban expansion and land-use transitions.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.45\textheight, keepaspectratio]%
+        {graphics/LULC_2000.jpg}
+    \caption{Land Use / Land Cover (LULC) Map --- Year 2000.}
+    \label{fig:lulc_2000}
+\end{figure}
+
+
+% ------------------------------------------------------------------ NDVI
+\subsubsection{NDVI --- Normalized Difference Vegetation Index}
+
+NDVI measures the density and health of live green vegetation using the contrast between near-infrared (NIR) and red reflectance:
+\begin{equation}
+\mathrm{NDVI} = \frac{\mathrm{NIR} - \mathrm{Red}}{\mathrm{NIR} + \mathrm{Red}}
+\end{equation}
+Values close to $+1$ indicate dense, healthy vegetation; values near $0$ indicate sparse or stressed vegetation; negative values indicate bare soil, impervious surfaces, or water bodies. In the Kathmandu Valley context, high NDVI is expected on the forested hillslopes and agricultural terraces during the post-monsoon window, while the urban core and river corridors return low or negative values.
+
+Comparing the 2000 and 2020 outputs in Figures~\ref{fig:ndvi_2000} and~\ref{fig:ndvi_2020}, a visible reduction in high-NDVI areas within and around the urban fringe is apparent, consistent with the conversion of agricultural and vegetated land to built-up surfaces over the two-decade period.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/NDVI_2000.jpg}
+    \caption{Normalized Difference Vegetation Index (NDVI) --- Year 2000.}
+    \label{fig:ndvi_2000}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/nvdi2020.pdf}
+    \caption{Normalized Difference Vegetation Index (NDVI) --- Year 2020.}
+    \label{fig:ndvi_2020}
+\end{figure}
+
+\clearpage
+
+% ------------------------------------------------------------------ NDBI
+\subsubsection{NDBI --- Normalized Difference Built-up Index}
+
+NDBI exploits the characteristically higher reflectance of impervious urban materials in the shortwave infrared (SWIR1) relative to the near-infrared (NIR) band:
+\begin{equation}
+\mathrm{NDBI} = \frac{\mathrm{SWIR1} - \mathrm{NIR}}{\mathrm{SWIR1} + \mathrm{NIR}}
+\end{equation}
+Positive NDBI values indicate impervious or bare surfaces; negative values correspond to vegetated or water-covered land. NDBI is particularly useful for delineating urban boundaries and tracking lateral expansion of the built-up footprint over time.
+
+The 2000 and 2020 maps in Figures~\ref{fig:ndbi_2000} and~\ref{fig:ndbi_2020} illustrate the growth of high-NDBI zones outward from the historic city centre, reflecting the rapid peri-urban densification documented across the Kathmandu Valley during this period.
+
+\vspace{1cm}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/NDBI_2000.jpg}
+    \caption{Normalized Difference Built-up Index (NDBI) --- Year 2000.}
+    \label{fig:ndbi_2000}
+\end{figure}
+
+\newpage
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/ndbi2020.pdf}
+    \caption{Normalized Difference Built-up Index (NDBI) --- Year 2020.}
+    \label{fig:ndbi_2020}
+\end{figure}
+
+
+
+% ------------------------------------------------------------------ MNDWI
+\subsubsection{MNDWI --- Modified Normalized Difference Water Index}
+
+MNDWI is preferred over the standard NDWI in urban settings because the use of SWIR1 in the denominator suppresses the reflectance of built-up surfaces, reducing false positives in water extraction:
+\begin{equation}
+\mathrm{MNDWI} = \frac{\mathrm{Green} - \mathrm{SWIR1}}{\mathrm{Green} + \mathrm{SWIR1}}
+\end{equation}
+Positive values identify open water bodies such as rivers, ponds, and wetlands. Built-up areas and dense vegetation typically return negative MNDWI values. In the Kathmandu Valley, the Bagmati river system and associated riparian wetlands are expected to produce the highest MNDWI responses, providing a reliable delineation of surface water extent.
+
+Comparing Figures~\ref{fig:mndwi_2000} and~\ref{fig:mndwi_2020} reveals changes in water body extent and riparian conditions, which may reflect both natural hydrological variability and anthropogenic encroachment on waterway margins over the study period.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/NDWI_2000.jpg}
+    \caption{Water Index (MNDWI) --- Year 2000.}
+    \label{fig:mndwi_2000}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/ndwi2020.pdf}
+    \caption{Water Index (MNDWI) --- Year 2020.}
+    \label{fig:mndwi_2020}
+\end{figure}
+
+\clearpage
+
+% ------------------------------------------------------------------ EBBI
+\subsubsection{EBBI --- Enhanced Built-up and Bareness Index}
+
+EBBI improves upon NDBI by incorporating the SWIR2 band in the denominator, which penalises bare-soil pixels and thereby sharpens the contrast between impervious urban surfaces and exposed earth. Even if NDBI and EBBI maps look visually similar, the mathematical structure and physical meaning of the pixel values are different.
+\begin{equation}
+\mathrm{EBBI} = \frac{\mathrm{SWIR1} - \mathrm{NIR}}{\mathrm{SWIR1} + \mathrm{NIR} + \sqrt{\mathrm{SWIR2}}}
+\end{equation}
+Higher EBBI values indicate dense impervious cover; lower values indicate vegetation, water, or bare soil. The index is especially valuable in peri-urban and transitional zones where newly cleared agricultural land could otherwise be confused with built-up surfaces when using NDBI alone.
+
+Figures~\ref{fig:ebbi_2000} and~\ref{fig:ebbi_2020} together demonstrate the intensification of high-EBBI zones within the valley, providing complementary evidence to the NDBI results while offering better discrimination against seasonal bare cropland.
+
+\vspace{1cm}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/EBBI_2000.jpg}
+    \caption{Enhanced Built-up and Bareness Index (EBBI) --- Year 2000.}
+    \label{fig:ebbi_2000}
+\end{figure}
+\newpage
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.92\textwidth, height=0.42\textheight, keepaspectratio]%
+        {graphics/EBBI 2020.pdf}
+    \caption{Enhanced Built-up and Bareness Index (EBBI) --- Year 2020.}
+    \label{fig:ebbi_2020}
+\end{figure}
+
+
+% ------------------------------------------------------------------ Training Samples
+\subsubsection{Training Sample Overlay}
+
+Figure~\ref{fig:training_2000} shows the spatial distribution of training polygons collected for the year 2000 classification. Samples were digitized manually over high-resolution reference imagery and verified against spectral signatures to ensure class separability. Each of the four target classes --- Water, Vegetation, Cropland, and Built-up --- is represented with sufficient spatial spread across the valley to avoid geographically clustered sampling bias. Care was taken to select samples that are spectrally representative of each class across varying terrain conditions, including both valley-floor and hillside locations. These labelled polygons are subsequently rasterized and used to extract per-pixel feature vectors for Random Forest classification.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth, height=0.52\textheight, keepaspectratio]%
+        {graphics/Training_sample_2000.png}
+    \caption{Imagery and LULC Training Samples --- Year 2000.}
+    \label{fig:training_2000}
+\end{figure}
+
+
+\subsection{Operational workflow documentation established}
+A repeatable and auditable workflow has been documented, detailing the QGIS-based steps for AOI clipping, QA\_PIXEL masking, and index generation. This documentation ensures consistent processing across years and supports reproducibility for iterative refinement and batch execution during the classification stage.
+
+\newpage
+% =======================================================================
+\section{Work Remaining}
+% =======================================================================
+
+The remaining work focuses on generating a complete and consistent annual LULC archive, validating its accuracy, constructing change products for urban growth/densification analysis, and implementing temporal forecasting models (including baseline Random Forest and sequence-based deep learning models).
+
+\subsection{Finalize training and validation datasets}
+Although pilot training samples have been prepared for initial years, the next step is to finalize a robust training and validation design. This includes ensuring adequate spatial coverage, balanced class representation, and separation of training vs.\ validation samples to avoid optimistic accuracy. Formally, the supervised learning dataset can be represented as:
+\begin{equation}
+\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^{N},
+\end{equation}
+where $y_i \in \{\text{Water}, \text{Vegetation}, \text{Cropland}, \text{Built-up}\}$ and $\mathbf{x}_i$ is the feature vector extracted from the stacked rasters:
+\begin{equation}
+\mathbf{x}_i =
+\bigl[
+B^{\text{mask}}_{1,i}, \dots, B^{\text{mask}}_{K,i},\;
+\mathrm{NDVI}_i,\; \mathrm{NDBI}_i,\; \mathrm{MNDWI}_i,\; \mathrm{EBBI}_i
+\bigr].
+\end{equation}
+
+\subsection{Year-wise LULC map generation using Random Forest baseline}
+The immediate technical milestone is to generate LULC maps consistently for all years (or selected intervals) using a supervised classifier. A Random Forest (RF) baseline will be trained using the extracted feature vectors and class labels. For an RF with $T$ decision trees $\{h_t(\cdot)\}_{t=1}^{T}$, the final predicted class is obtained via majority voting:
+\begin{equation}
+\hat{y}(\mathbf{x}) = \arg\max_{c} \sum_{t=1}^{T} \mathbf{1}\bigl[h_t(\mathbf{x}) = c\bigr].
+\end{equation}
+The output for each year will be an annual LULC raster, stored in a standardized archive to support temporal analysis.
+
+\subsection{Accuracy assessment and error diagnosis}
+After producing yearly LULC maps, classification quality will be quantified using standard metrics derived from the confusion matrix. For a given class:
+\begin{align}
+\text{Overall Accuracy (OA)} &= \frac{\sum_{c} n_{cc}}{N},\\[4pt]
+\text{Precision} &= \frac{\text{TP}}{\text{TP}+\text{FP}}, \qquad
+\text{Recall} = \frac{\text{TP}}{\text{TP}+\text{FN}},\\[4pt]
+\text{F1-score} &= \frac{2\,\cdot\,\text{Precision}\,\cdot\,\text{Recall}}{\text{Precision}+\text{Recall}},
+\end{align}
+and Cohen's Kappa ($\kappa$) will be computed as:
+\begin{equation}
+\kappa = \frac{p_o - p_e}{1 - p_e},
+\end{equation}
+where $p_o$ is the observed agreement (OA) and $p_e$ is the expected agreement by chance. Error patterns (e.g., built-up vs.\ bare land or cropland vs.\ vegetation confusion) will guide targeted refinement of training samples and features.
+
+\subsection{Temporal consistency refinement and LULC time-series construction}
+Once per-year accuracy is acceptable, the LULC archive will be reviewed for temporal consistency to reduce year-to-year noise. This includes checking for unrealistic oscillations in stable classes and handling years with limited clear pixels through improved scene selection and consistent processing rules across sensors.
+
+\subsection{Urban growth, densification, and change analysis products}
+From the validated LULC time series, change products will be derived:
+\begin{itemize}
+  \item Built-up expansion maps (non-built to built transitions).
+  \item Transition matrices summarising class conversions between periods.
+  \item Area statistics per class. For class $c$ at year $t$, area is computed as:
+  \begin{equation}
+  A_{c,t} = n_{c,t} \times (30\,\text{m})^{2},
+  \end{equation}
+  where $n_{c,t}$ is the number of pixels labelled as class $c$.
+\end{itemize}
+
+\subsection{Temporal prediction modeling and forecasting}
+After constructing analysis-ready temporal datasets, sequence-based models (LSTM/CNN-LSTM) will be trained to predict future LULC states. Using a temporal input sequence $\mathbf{X} = [X_1, X_2, \dots, X_T]$, the CNN-LSTM mapping can be expressed as:
+\begin{equation}
+\hat{Y}_t = f_{\text{LSTM}}\!\bigl(f_{\text{CNN}}(X_1),\; f_{\text{CNN}}(X_2),\; \dots,\; f_{\text{CNN}}(X_t)\bigr),
+\end{equation}
+where $f_{\text{CNN}}(\cdot)$ extracts spatial features (patch-level context) and $f_{\text{LSTM}}(\cdot)$ models temporal dependencies across years. Forecast performance will be evaluated using hindcasting (predicting known later years from earlier years) and compared against baseline approaches.
+
+\subsection{Final outputs and reporting}
+The final stage will package all results into GIS-ready outputs and research deliverables, including:
+\begin{itemize}
+  \item Final annual LULC archive (2000--2025) with accuracy reports.
+  \item Urban growth and densification maps, transition analyses, and summary statistics.
+  \item Forecast LULC scenarios for selected future horizons (e.g., 3--5 years).
+  \item Complete workflow documentation ensuring reproducibility from preprocessing to prediction.
+\end{itemize}
+
+\end{document}

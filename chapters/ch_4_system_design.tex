@@ -1,0 +1,96 @@
+\documentclass[main]{subfiles}
+
+\begin{document}
+
+\chapter{\MakeUppercase{System Design and Architecture}}
+
+\section{Overview}
+
+This study adopts a structured \textit{Machine Learning Model Development Lifecycle (MLMDL)} to design, implement, and validate a predictive modeling framework for analyzing and forecasting urban growth and LULC dynamics in the Kathmandu Valley. The MLMDL framework ensures methodological rigor by systematically addressing data acquisition, preprocessing, feature engineering, model development, evaluation, and iterative refinement. Given the long-term and spatially complex nature of urbanization processes, adherence to a standardized and well-established development pipeline is essential to achieve reliable, reproducible, and interpretable prediction outcomes.
+
+\section{Machine Learning Model Development Lifecycle}
+
+The overall system design follows the general ML pipeline illustrated in Figure~\ref{fig:Detailed_ML_system_pipeline}, adapted from Chapter~2.2 of \textit{Machine Learning Simplified} book. This pipeline provides a conceptual backbone for organizing the flow of data and processes within the proposed system.
+
+\begin{figure}[htbp]
+    \centering
+    % Scale to A4 width while keeping aspect ratio
+    \includegraphics[width=\textwidth]{graphics/Detailed_ML_system_pipeline.png}
+    \caption{Detailed pipeline for a full ML system.}
+    \label{fig:Detailed_ML_system_pipeline}
+\end{figure}
+
+\begin{center}  
+\footnotesize
+\textit({Source:} https://themlsbook.com/)
+\end{center}
+
+
+\begin{itemize}
+    \item Data acquisition and integration
+    \item Data preprocessing and feature engineering
+    \item Model training and validation
+    \item Model evaluation and refinement
+    \item Output generation and interpretation
+\end{itemize}
+
+This lifecycle-driven approach reduces model bias, improves generalization, and supports iterative improvement based on evaluation results.
+
+\section{Data Flow Diagram(DFD)}
+
+The low level logical structure of the system can be represented by using a Level 0 Data Flow Diagram (DFD-0), which simply explains the system's inputs and output.
+
+\begin{figure}[htbp]
+    \centering
+    % Scale to A4 width while keeping aspect ratio
+    \includegraphics[width=\textwidth]{graphics/Urban_Growth_And_LULC_Prediction_System_DFD-0.png}
+    \caption{DFD-0}
+    \label{fig:Urban_Growth_And_LULC_Prediction_System_DFD-0}
+\end{figure}
+
+The system's internal logical structure can be explained by a Level 1 Data Flow Diagram (DFD-1), which decomposes the workflow into five core processes: data acquisition, preprocessing, feature engineering, temporal machine learning modeling, and visualization and analysis.
+
+
+
+
+
+
+\subsection*{Process 1.0: Data Acquisition}
+
+Multi-temporal Landsat surface reflectance imagery and historical LULC maps are collected from reliable archival sources including USGS Earth Explorer and Google Earth Engine. Landsat provides consistent long-term spectral observations with 30-meter spatial resolution, while LULC maps offer contextual information on past land cover conditions. Administrative boundary shapefiles and Digital Elevation Models (DEM) are also acquired to support spatial subsetting and terrain analysis. These datasets are systematically organized and stored as the Raw Landsat and LULC Dataset repository for subsequent processing stages.
+
+\subsection*{Process 2.0: Preprocessing}
+
+Collected datasets undergo comprehensive preprocessing to ensure spatial and radiometric consistency across the multi-decadal time series. Spatial clipping operations extract the study area extent, reducing data volume and computational overhead. Cloud and shadow masking procedures utilize quality assessment bands to identify and remove contaminated pixels, while temporal compositing fills data gaps. Radiometric correction workflows normalize surface reflectance values across different Landsat sensors (Landsat 5 TM, Landsat 7 ETM+, Landsat 8 OLI, and Landsat 9 OLI-2). Temporal alignment ensures imagery corresponds to comparable phenological conditions, typically the dry season. The output comprises a standardized set of Preprocessed Imageries and Maps ready for feature extraction and analysis.
+
+\subsection*{Process 3.0: Feature Engineering}
+
+Relevant spectral, spatial, and temporal features are systematically extracted from preprocessed imagery to capture urban growth and land cover dynamics. Spectral features include vegetation indices (NDVI), built-up indices (NDBI, EBBI), and water indices (NDWI). Spatial features incorporate texture metrics (entropy, variance), topographic variables (elevation, slope), and proximity measures (distance to roads, urban centers). Temporal features analyze time-series trajectories to quantify change magnitude, trend direction, and inter-annual variability. These engineered features form a comprehensive Featured Temporal Dataset suitable for machine learning model training.
+
+
+\subsection*{Process 4.0: Temporal Machine Learning Modeling}
+
+Machine learning models are trained on the featured dataset to learn land cover transition patterns and urban expansion dynamics. The modeling process implements temporal architectures including Long Short-Term Memory (LSTM) networks and Convolutional Neural Network-LSTM (CNN-LSTM) frameworks that capture sequential dependencies in land cover evolution. Training involves dataset partitioning, hyperparameter optimization, and iterative refinement based on performance metrics. The trained models recognize non-linear relationships between features and land cover transitions, capturing gradual agricultural conversion, urban infill, and densification. Model outputs include Predicted LULC Maps and Cluster Zones representing areas of concentrated urban growth.
+
+\subsection*{Process 5.0: Visualization and Analysis}
+
+Model outputs are transformed into interpretable geospatial visualizations and analytical products that communicate urban growth dynamics to diverse stakeholder audiences. Visualization workflows generate thematic LULC maps, change detection maps, and growth trajectory maps illustrating urbanization directions and intensity gradients. Cluster analysis results are rendered as spatial zones delineating high growth areas, stable regions, and transition boundaries. Statistical summaries quantify land cover class areas, transition matrices, and change rates across temporal periods. Comparative visualizations assess forecast reliability and identify uncertainty patterns by juxtaposing predicted scenarios against historical trends. All outputs are formatted in standard GIS compatible formats (GeoTIFF, Shapefile, KML) with metadata documentation. These products support informed decision making and provide feedback for model improvements.
+
+\begin{figure}[htbp]
+    \centering
+    \rotatebox{90}{%
+        \includegraphics[width=0.95\textheight, keepaspectratio]{graphics/Urban_Growth_And_LULC_Prediction_System_DFD-1.png}
+    }
+    \caption{DFD-1}
+    \label{fig:Urban_Growth_And_LULC_Prediction_System_DFD-1}
+\end{figure}
+
+
+\section{System Outputs}
+
+Final outputs are delivered to researchers and decision-makers in standard geospatial formats compatible with GIS platforms. These outputs provide spatially explicit insights into urban growth dynamics and potential future development pressures within the Kathmandu Valley. The deliverables include multi-temporal LULC classification maps documenting historical land cover changes, future growth predictions identifying areas susceptible to urban expansion and densification, change analysis reports quantifying transition patterns, and model performance evaluation metrics assessing prediction accuracy.
+
+The LULC maps are generated at 30-meter resolution covering the entire Kathmandu Valley study area. Predicted growth scenarios are provided for multiple future time horizons, allowing planners to evaluate development trajectories. Change analysis outputs include transition matrices, spatial clustering analysis, and temporal trend visualizations. Model evaluation results encompass overall accuracy, precision, recall, Kappa coefficients, and confusion matrices. All outputs are accompanied by metadata documentation ensuring reproducibility and facilitating integration into planning frameworks for evidence-based urban planning and sustainable land management strategies.
+
+
+\end{document}

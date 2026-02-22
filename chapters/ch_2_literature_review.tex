@@ -1,0 +1,121 @@
+\documentclass[main]{subfiles} 
+
+\begin{document}
+
+\chapter{\MakeUppercase{LITERATURE REVIEW}}
+
+Kathmandu Valley has experienced rapid, largely unplanned urban expansion that is reshaping land-use patterns and putting pressure on ecosystem services. Using multi-date Landsat imagery and a pixel-based hybrid classification approach, Ishtiaque et al. report that urban/built-up area expanded by \textasciitilde 412\% between 1989 and 2016, with much of this growth occurring through conversion of agricultural land (reported as \textasciitilde 31\% conversion from agriculture to urban), and continuing outward along major road corridors in a broadly concentric pattern \cite{environments4040072}. The study identifies Kathmandu’s centrality and rural-to-urban migration as key proximate drivers of this fast expansion, implying that demographic and accessibility factors are tightly coupled with observed land transitions \cite{environments4040072}.
+
+Beyond mapping, studies also document substantial losses of forests, croplands, and water bodies, and highlight why prediction is critical for planning. In Kathmandu District, Wang et al. used remote sensing + GIS to detect and predict LULC change, reporting that from 1990 to 2010 the district lost 9.28\% forest, 9.80\% agricultural land, and 77\% water bodies, while urbanized area increased by 52.47\%; they further projected additional decreases by 2030 (forest −14.43\%, agriculture −16.67\%, water −25.83\%) with urbanized land predicted to gain 18.55\% \cite{wang2020land}.
+
+Collectively, the literature agrees on a clear trajectory: built-up land expands rapidly at the expense of agricultural land, vegetation/forest cover, and especially water bodies, with measurable degradation of ecosystem service value. Mapping studies establish what changed and where, while prediction-oriented work indicates how trends may worsen under business-as-usual growth. However, the recent multi-temporal ML-based classifications and the longer-term Landsat/CA–Markov analyses suggest a practical research need: integrated, temporally explicit urban-growth forecasting for Kathmandu that connects LULC transitions to planning-relevant impacts (e.g., vegetation loss, water-body shrinkage, and ecosystem services) using consistent time-series data and validated ML/GIS pipelines \cite{environments4040072, 10.11648/j.ajese.20250904.12, wang2020land, su142315739}.
+
+% LULC (Land Use / Land Cover) as an Analytical Framework
+
+LULC analysis is widely used for accurate spatio-temporal mapping of urban environments, providing essential information for urban planning and management. Multi-temporal LULC mapping enables the assessment of how urban land classes evolve over time, particularly in rapidly expanding cities \cite{environments4040072}.
+
+Urban LULC classification is typically organized around built-up areas, vegetation, and water bodies, as these classes represent the dominant transformations associated with urban growth. Spectral indices such as the NDVI and NDBI are commonly employed to enhance class separability in multispectral satellite imagery \cite{environments4040072, rimal2025}.
+
+% Methods Used in Prior Studies
+
+Recent studies emphasize the use of machine learning classifiers for urban LULC mapping, particularly when dealing with multi-temporal and multisensor datasets, where classifier performance can vary across space and time. Comparative evaluations show that identifying an optimal classifier for specific urban LULC classes remains a key challenge \cite{Ouma31122023}.
+
+Using multi-decadal Landsat imagery (30 m spatial resolution) at regular temporal intervals, studies demonstrate that Random Forest (RF) consistently outperforms other classifiers such as SVM, Multilayer Perceptron Artificial Neural Networks (MLP-ANN), and GTB in urban LULC classification tasks. RF achieves higher overall accuracy due to its robustness, ability to model nonlinear relationships, and effectiveness with long-term temporal data \cite{Ouma31122023}.
+
+The use of Landsat data from the 1980s to recent years enables reliable detection of long-term urban expansion patterns, making Landsat’s 30 m spatial resolution and dense temporal archive particularly suitable for urban growth studies that prioritize temporal consistency over very high spatial detail \cite{ZHAO2024129, environments4040072}. Additionally, post-classification ensemble and fusion approaches further improve classification accuracy, highlighting the advantage of combining classifier outputs in urban LULC mapping \cite{Ouma31122023}.
+
+Local LULC research on the Kathmandu Valley has applied the CA-Markov model to analyze and project future urban growth trends alongside machine-learning approaches. In the MDPI study, CA-Markov is used after initial time-series classification (e.g., SVM) to project future urban expansion for Kathmandu and Pokhara based on past LULC transitions, demonstrating its usefulness in forecasting spatial patterns of change \cite{rimal2025}.
+
+However, limitations exist for CA-Markov due to its reliance on historical linear transition probabilities, making it less capable of modeling non-linear and context-dependent dynamics associated with rapid urban change. For example, studies note that CA-Markov assumes predictable transitions and does not effectively incorporate socioeconomic or environmental drivers that influence urban expansion in complex ways. This motivates the integration of ML approaches that can capture non-linear relationships and additional drivers beyond pure spatial transitions \cite{ZHAO2024129}.
+This limitation encourages the use of ML models that can handle non-linearity and richer feature sets.
+
+\subsection*{Research Gap and Motivation}
+
+Although widely applied for simulating urban growth and LULC change, the CA–Markov model has important limitations. It relies on static transition probabilities and assumes that future land cover changes will follow past trends, which often fails under rapid socio-economic changes, policy shifts, or environmental pressures \cite{ZHAO2024129}. Additionally, CA–Markov does not explicitly account for dynamic drivers such as population growth, infrastructure, or planning regulations, and its simple neighborhood rules can produce overly compact and homogeneous urban patches, ignoring complex spatial heterogeneity \cite{10.11648/j.ajese.20250904.12}. These limitations reduce its predictive accuracy, especially over longer horizons or in rapidly changing urban areas, motivating the need for more flexible and data-driven approaches.
+
+Recent studies demonstrate that machine learning (ML) models provide a powerful alternative to traditional CA–Markov for urban growth and LULC prediction because they can learn complex, non-linear relationships, integrate multiple dynamic drivers, and capture long\textminus term temporal dependencies from multi\textminus date Landsat time series \cite{BOULILA2021101325}. Techniques such as Random Forest, Artificial Neural Networks (ANN), and LSTM based temporal models have shown improved modeling of both spatial and temporal change patterns compared with simpler extrapolation methods, enabling the inclusion of socio\textminus economic, environmental, and infrastructural variables alongside spectral data. Hybrid architectures like CNN–LSTM further enhance performance by combining spatial feature extraction with temporal memory, improving simulation of both expansion and densification patterns beyond what CA–Markov alone can achieve \cite{BOULILA2021101325}. 
+
+Budha et al., 2025, In the context of Nepal, recent work in Chaurjahari Municipality applied a Multi\textminus Layer Perceptron (MLP) neural network within an ML\textminus Markov framework to simulate built‑up expansion, demonstrating the utility of forward\textminus feed neural models (calibration accuracy \textasciitilde 73.4\%, prediction accuracy \textasciitilde 78.5\%) for future LULC scenarios when compared with historical maps, and underscoring the value of ML approaches for evidence\textminus based planning in rapidly changing urban environments \cite{Budha2025}.
+
+\section{Literature Review Summary}
+
+Table~\ref{tab:literature_summary} synthesizes the major findings from previous studies on urban growth and land use/land cover (LULC) change, highlighting the data sources, methods, and key limitations relevant to this research. The summary emphasizes the progression from descriptive mapping toward predictive and machine-learning-based approaches.
+
+
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\small
+
+\begin{longtable}{|c|p{2.8cm}|p{4.2cm}|p{5cm}|}
+\caption{Summary of Key Literature on Urban Growth and LULC Change}
+\label{tab:literature_summary} \\
+
+\hline
+\textbf{S.N.} &
+\textbf{Author (Year)} &
+\textbf{Focus and Objective} &
+\textbf{Key Findings} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{S.N.} &
+\textbf{Author (Year)} &
+\textbf{Focus and Objective} &
+\textbf{Key Findings} \\
+\hline
+\endhead
+
+1 &
+Ishtiaque et al. (2017)~\cite{environments4040072} &
+Analyze long-term urban expansion and LULC dynamics in Kathmandu Valley. &
+Multi-temporal Landsat-based hybrid classification (1989--2016) revealed rapid built-up expansion (\(\sim\)412\%) mainly through agricultural land conversion. Strong empirical evidence of unplanned growth, but limited to historical analysis without predictive modeling. \\
+\hline
+
+2 &
+Wang et al. (2020)~\cite{wang2020land} &
+Detect and predict LULC change in Kathmandu District for planning support. &
+Landsat and GIS-based LULC mapping with conventional prediction showed major losses of forest, agriculture, and water bodies with projected urban growth by 2030. Relies on traditional transition-based prediction with limited ability to capture non-linear dynamics. \\
+\hline
+
+3 &
+Thapa \& Murayama (2012)~\cite{thapa2012scenario} &
+Simulate future urban growth scenarios in Kathmandu Valley. &
+Scenario-based CA-oriented urban growth allocation highlighted outward expansion patterns. Effective for spatial planning scenarios but does not model densification or complex temporal dynamics. \\
+\hline
+
+4 &
+Rimal et al. (2025)~\cite{rimal2025} &
+Assess urban growth and sustainability challenges in Himalayan cities. &
+SVM-based LULC classification combined with CA--Markov prediction using Landsat time series. Demonstrates future cropland loss and sustainability risks; however, CA--Markov assumptions limit flexibility under rapid urban change. \\
+\hline
+
+5 &
+Ouma et al. (2023)~\cite{Ouma31122023} &
+Evaluate machine learning classifiers for urban LULC mapping. &
+Comparative assessment of RF, SVM, and ensemble approaches using multi-temporal satellite data shows RF consistently outperforming others in accuracy and robustness. Focused on classification rather than growth prediction. \\
+\hline
+
+6 &
+Zhao et al. (2024)~\cite{ZHAO2024129} &
+Compare ML algorithms for LULC classification using Google Earth Engine. &
+RF achieved the highest accuracy among CART and SVM using Sentinel-2 data, highlighting the effectiveness of ML for large-scale LULC mapping. Does not explicitly address long-term urban growth forecasting. \\
+\hline
+
+7 &
+Boulila et al. (2021)~\cite{BOULILA2021101325} &
+Model urban expansion using deep learning and temporal satellite data. &
+CNN--LSTM framework captures spatio-temporal urban growth patterns more effectively than traditional models. Demonstrates superiority of temporal ML approaches for non-linear urban dynamics, but applied outside the Nepal context. \\
+\hline
+
+8 &
+Budha et al. (2025)~\cite{Budha2025} &
+Simulate future urban expansion in a Nepalese municipality using ML. &
+MLP-based ML-Markov framework achieved moderate-to-high prediction accuracy, demonstrating the applicability of neural networks for urban growth simulation in Nepal. Still partially dependent on Markov transition logic. \\
+\hline
+
+\end{longtable}
+
+\end{document}
