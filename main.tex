@@ -25,7 +25,14 @@
   
 % for times new roman font
 \usepackage{fontspec}
-\setmainfont{Times New Roman}
+\setmainfont{Times New Roman}[
+  Path = ./fonts/,
+  Extension = .ttf,
+  UprightFont = times,
+  BoldFont = timesbd,
+  ItalicFont = timesi,
+  BoldItalicFont = timesbi
+]
 
 % for non-indented paragraphs separated by an empty line
 \usepackage{parskip}
